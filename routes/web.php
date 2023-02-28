@@ -51,13 +51,13 @@ Route::get('/categories', function () {
 Route::get('/categories/{category:slug}', function (Category $category) {
     return view('posts', [
         'title' => "Post By Category : $category->name",
-        'posts' => $category->posts,
+        'posts' => $category->posts->load('author', 'category'),
     ]);
 });
 
 Route::get('/authors/{author:username}', function (User $author){
     return view('posts', [
         'title' => "Post By Author : $author->name",
-        'posts' => $author->posts,
+        'posts' => $author->posts->load('category','author'),
     ]);
 });
