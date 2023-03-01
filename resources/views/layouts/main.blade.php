@@ -27,6 +27,11 @@
       border-top-left-radius: 0;
       border-top-right-radius: 0;
     }
+
+    .form-registration input{
+      border-radius: 0;
+      margin-bottom: -1px;
+    }
   </style>
   <title>{{ $title }}</title>
 </head>
