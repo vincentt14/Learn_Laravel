@@ -21,6 +21,9 @@
     </div>
   </div>
 
+  <div class="d-flex justify-content-center">
+    {{ $posts->links() }}
+  </div>
 
   @if ($posts->count())
     <div class="card mb-5">
