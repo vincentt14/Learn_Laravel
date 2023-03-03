@@ -6,7 +6,7 @@
   </div>
 
   @if (session()->has('success'))
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-success col-lg-8" role="alert">
       {{ session('success') }}
     </div>
   @endif
@@ -29,9 +29,15 @@
             <td>{{ $loop->iteration }}</td>
             <td>{{ $post->title }}</td>
             <td>{{ $post->category->name }}</td>
-            <td><a href="/dashboard/posts/{{ $post->slug }}" class="badge bg-info">view</a></td>
-            <td><a href="/" class="badge bg-warning">edit</a></td>
-            <td><a href="/" class="badge bg-danger">delete</a></td>
+            <td>
+              <a href="/dashboard/posts/{{ $post->slug }}" class="badge bg-info">view</a>
+              <a href="/dashboard/posts/{{ $post->slug }}/edit" class="badge bg-warning">edit</a>
+              <form action="/dashboard/posts/{{ $post->slug }}" method="post" class="d-inline">
+                @method('delete')
+                @csrf
+                <button class="badge bg-danger border-0" onClick="return confirm('Are you sure?')">delete</button>
+              </form>
+            </td>
           </tr>
         @endforeach
       </tbody>
