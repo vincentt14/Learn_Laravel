@@ -7,6 +7,7 @@ use App\Models\Category;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
@@ -97,6 +98,9 @@ class DashboardPostController extends Controller
         $validatedData = $request->validate($rules);
 
         if ($request->file('image')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
             $validatedData['image'] = $request->file('image')->store('post-images');
         }
 
@@ -113,6 +117,9 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if ($post->image) {
+            Storage::delete($post->image);
+        }
         Post::destroy($post->id);
         return redirect('/dashboard/posts')->with('success', 'Post has been deleted!');
     }
